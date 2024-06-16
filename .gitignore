@@ -1,2 +1,5 @@
 /.env
-/__pycache__
+/Photo.__pycache__
+/App.__pycache__
+/App.Handlers.__pycache__
+/.venv.Lib.site-packages.__pycache__
