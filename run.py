@@ -7,9 +7,9 @@ from aiogram.enums import ParseMode
 from aiogram import Bot, Dispatcher
 from aiogram.client.default import DefaultBotProperties
 
-from App.Handlers.handlers import user_router
-from App.Handlers.uz_handlers import uz_user_router
-from App.Handlers.ru_handlers import ru_user_router
+from App.Bot.Handlers.handlers import user_router
+from App.Bot.Handlers.uz_handlers import uz_user_router
+from App.Bot.Handlers.ru_handlers import ru_user_router
 
 
 logging.basicConfig(

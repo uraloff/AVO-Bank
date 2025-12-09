@@ -2,8 +2,9 @@ from aiogram import F, Router
 from aiogram.types import CallbackQuery
 from aiogram.exceptions import TelegramBadRequest
 
-from App.keyboards import inline_builder
 from Photo import img_handler as img
+from App.Core.Database.Requests import user_rq
+from App.Bot.Keyboards.keyboards import inline_builder
 
 
 ru_user_router = Router()
@@ -12,6 +13,8 @@ ru_user_router = Router()
 # ----------------------------------------------КНОПКА "Русский язык"----------------------------------------------
 @ru_user_router.callback_query(F.data.in_({'ru', 'ru_back_to_main_from_bonuses', 'ru_back_to_main_from_card', 'ru_back_to_main_from_operations', 'ru_back_to_main_from_about_us'}))
 async def ru_user(callback: CallbackQuery) -> None:
+    await user_rq.set_user_language(callback.from_user.id, 'ru')
+
     try:
         await callback.message.edit_text("Добро пожаловать на домашнюю страницу! Вы можете узнать необходимую информацию, выбрав один из следующих вариантов", 
                                      reply_markup=inline_builder(

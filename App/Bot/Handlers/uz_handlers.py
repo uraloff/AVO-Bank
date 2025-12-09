@@ -2,8 +2,9 @@ from aiogram import F, Router
 from aiogram.types import CallbackQuery
 from aiogram.exceptions import TelegramBadRequest
 
-from App.keyboards import inline_builder
 from Photo import img_handler as img
+from App.Bot.Keyboards.keyboards import inline_builder
+from App.Core.Database.Requests import user_rq
 
 
 uz_user_router = Router()
@@ -12,6 +13,8 @@ uz_user_router = Router()
 # ----------------------------------------------"O'zbek tili" KNOPKASI---------------------------------------------
 @uz_user_router.callback_query(F.data.in_({'uz', 'uz_back_to_main_from_bonuses', 'uz_back_to_main_from_card', 'uz_back_to_main_from_operations', 'uz_back_to_main_from_about_us'}))
 async def uz_user(callback: CallbackQuery) -> None:
+    await user_rq.set_user_language(callback.from_user.id, 'uz')
+
     try:
         await callback.message.edit_text("Bosh sahifaga xush kelibsiz! Quyidagilardan birini tanlab o'zingizga kerakli bo'lgan ma'lumotlarni bilib olishingiz mumkin",
                                          reply_markup=inline_builder(
