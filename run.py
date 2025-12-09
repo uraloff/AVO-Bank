@@ -10,6 +10,8 @@ from aiogram.client.default import DefaultBotProperties
 from App.Bot.Handlers.handlers import user_router
 from App.Bot.Handlers.uz_handlers import uz_user_router
 from App.Bot.Handlers.ru_handlers import ru_user_router
+from App.Core.Database.Requests.session import async_session
+from App.Bot.Middlewares.user_last_activity import UserLastActivityMiddleware
 
 
 logging.basicConfig(
@@ -28,6 +30,7 @@ async def main():
         default=DefaultBotProperties(parse_mode=ParseMode.HTML)
     )
     dp = Dispatcher()
+    dp.update.outer_middleware(UserLastActivityMiddleware(user_last_activity=async_session))
     dp.include_routers(user_router, uz_user_router, ru_user_router)
 
     logging.info("Бот успешно запущен ✅")

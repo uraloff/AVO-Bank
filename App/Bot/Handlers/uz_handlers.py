@@ -3,8 +3,8 @@ from aiogram.types import CallbackQuery
 from aiogram.exceptions import TelegramBadRequest
 
 from Photo import img_handler as img
-from App.Bot.Keyboards.keyboards import inline_builder
 from App.Core.Database.Requests import user_rq
+from App.Bot.Keyboards.keyboards import inline_builder
 
 
 uz_user_router = Router()
