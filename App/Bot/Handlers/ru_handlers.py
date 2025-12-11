@@ -4,22 +4,22 @@ from aiogram.exceptions import TelegramBadRequest
 
 from Photo import img_handler as img
 from App.Core.Database.Requests import user_rq
-from App.Bot.Keyboards.keyboards import inline_builder
+from App.Bot.Keyboards.ikb_keyboards import inline_builder
 
 
 ru_user_router = Router()
 
 
 # ----------------------------------------------КНОПКА "Русский язык"----------------------------------------------
-@ru_user_router.callback_query(F.data.in_({'ru', 'ru_back_to_main_from_bonuses', 'ru_back_to_main_from_card', 'ru_back_to_main_from_operations', 'ru_back_to_main_from_about_us'}))
+@ru_user_router.callback_query(F.data.in_({'ru', 'ru_back_to_main_from_bonuses', 'ru_back_to_main_from_card', 'ru_back_to_main_from_operations', 'ru_back_to_main_from_about_us', 'ru_back_to_main_from_giveaway'}))
 async def ru_user(callback: CallbackQuery) -> None:
     await user_rq.set_user_language(callback.from_user.id, 'ru')
 
     try:
         await callback.message.edit_text("Добро пожаловать на домашнюю страницу! Вы можете узнать необходимую информацию, выбрав один из следующих вариантов", 
                                      reply_markup=inline_builder(
-                                        ['💸 Бонусы', '💳 AVO platinum', '🏦 О нас', '🔄 Операции', 'Назад ↩️'],
-                                        ['ru_bonuses', 'ru_card', 'ru_about_us', 'ru_operations', 'ru_back_to_lang'],
+                                        ['💸 Бонусы', '💳 AVO platinum', '🏦 О нас', '🔄 Операции', '🌟 Розыгрыш «AVO айфон марафон» 🌟'],
+                                        ['ru_bonuses', 'ru_card', 'ru_about_us', 'ru_operations', 'ru_giveaway'],
                                         [2, 2, 1]
                                     )
         )
@@ -28,8 +28,8 @@ async def ru_user(callback: CallbackQuery) -> None:
         await callback.message.delete()
         await callback.message.answer("Добро пожаловать на домашнюю страницу! Вы можете узнать необходимую информацию, выбрав один из следующих вариантов",
                                      reply_markup=inline_builder(
-                                        ['💸 Бонусы', '💳 AVO platinum', '🏦 О нас', '🔄 Операции', 'Назад ↩️'],
-                                        ['ru_bonuses', 'ru_card', 'ru_about_us', 'ru_operations', 'ru_back_to_lang'],
+                                        ['💸 Бонусы', '💳 AVO platinum', '🏦 О нас', '🔄 Операции', '🌟 Розыгрыш «AVO айфон марафон» 🌟'],
+                                        ['ru_bonuses', 'ru_card', 'ru_about_us', 'ru_operations', 'ru_giveaway'],
                                         [2, 2, 1]
                                     )
     )
@@ -350,5 +350,19 @@ async def ru_other_tariffs_2(callback: CallbackQuery) -> None:
                                          ['Страница 1 ⬅️', 'Назад ↩️'],
                                          ['ru_other_tariffs_1', 'ru_back_to_operations_from_other_tariffs']
                                     )
+    )
+    await callback.answer()
+
+
+# ----------------------------------------------КНОПКА "🌟 Розыгрыш «AVO айфон марафон» 🌟"----------------------------------------------
+@ru_user_router.callback_query(F.data == 'ru_giveaway')
+async def ru_giveaway(callback: CallbackQuery) -> None:
+    await callback.message.delete()    
+    await callback.message.answer_photo(photo=img.about_giveaway_ru_photo,
+                                        caption="<b>🌟 Розыгрыш «AVO айфон марафон» 🌟</b>\n\nНоябрь точно не будет скучным — ведь мы стартуем розыгрыш «AVO айфон марафон»!\n\nДелайте привычные покупки и получайте реальные шансы выиграть iPhone 17 Pro Max, билеты на HUMOFEST и набор мерча от AVO.\n\nВаш кофе, подписка или любая другая оплата может стать шагом к новому айфону",
+                                        reply_markup=inline_builder(
+                                            ['Назад ↩️'],
+                                            ['ru_back_to_main_from_giveaway']
+                                        )
     )
     await callback.answer()

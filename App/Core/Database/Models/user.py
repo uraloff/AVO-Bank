@@ -20,5 +20,6 @@ class User(Base):
     joined_at: Mapped[datetime] = mapped_column(DateTime(timezone=False), default=lambda: datetime.now().replace(microsecond=0))
     language: Mapped[str] = mapped_column(String(2), nullable=True)
     referral_code: Mapped[str] = mapped_column(String(50), nullable=True)
+    phone_number: Mapped[str] = mapped_column(String(20), nullable=True)
     last_active: Mapped[datetime] = mapped_column(DateTime(timezone=False), default=lambda: datetime.now().replace(microsecond=0), onupdate=lambda: datetime.now().replace(microsecond=0))
     status: Mapped[UserStatus] = mapped_column(Enum(UserStatus, native_enum=False, length=50), default=UserStatus.default, server_default='default', nullable=False)

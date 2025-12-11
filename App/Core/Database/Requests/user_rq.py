@@ -6,6 +6,7 @@ from App.Core.Database.Models.user import User, UserStatus
 from App.Core.Database.Requests.session import async_session
 
 
+# ------------------------------ Создание нового пользователя ------------------------------
 async def set_user(telegram_id: int, full_name: str, username: str | None = None, referral_code: str | None = None) -> None:
     """
     Создает нового пользователя в базе данных со стартовыми параметрами. Поля `joined_at` и `last_active` устанавливаются на текущее время.

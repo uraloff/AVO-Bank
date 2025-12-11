@@ -4,7 +4,9 @@ from aiogram.types import FSInputFile
 about_us_uz_photo = FSInputFile('E:\\MyCodes\\PythonCodes\\TelegramBots\\AVObank\\Photo\\about_us_uz.PNG')
 about_bonus_uz_photo = FSInputFile('E:\\MyCodes\\PythonCodes\\TelegramBots\\AVObank\\Photo\\about_bonus_uz.png')
 about_card_uz_photo = FSInputFile('E:\\MyCodes\\PythonCodes\\TelegramBots\\AVObank\\Photo\\about_card_uz.PNG')
+about_giveaway_uz_photo = FSInputFile('E:\\MyCodes\\PythonCodes\\TelegramBots\\AVObank\\Photo\\about_giveaway_uz.jpg')
 
 about_us_ru_photo = FSInputFile('E:\\MyCodes\\PythonCodes\\TelegramBots\\AVObank\\Photo\\about_us_ru.PNG')
 about_bonus_ru_photo = FSInputFile('E:\\MyCodes\\PythonCodes\\TelegramBots\\AVObank\\Photo\\about_bonus_ru.PNG')
 about_card_ru_photo = FSInputFile('E:\\MyCodes\\PythonCodes\\TelegramBots\\AVObank\\Photo\\about_card_ru.PNG')
+about_giveaway_ru_photo = FSInputFile('E:\\MyCodes\\PythonCodes\\TelegramBots\\AVObank\\Photo\\about_giveaway_ru.jpg')

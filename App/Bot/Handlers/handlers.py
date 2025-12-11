@@ -2,7 +2,7 @@ from aiogram import Router, F, html
 from aiogram.types import Message, CallbackQuery
 from aiogram.filters import CommandStart, Command
 
-from App.Bot.Keyboards.keyboards import lang_ikb
+from App.Bot.Keyboards.ikb_keyboards import lang_ikb
 from App.Core.Database.Requests import user_rq
 
 

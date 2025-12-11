@@ -4,22 +4,22 @@ from aiogram.exceptions import TelegramBadRequest
 
 from Photo import img_handler as img
 from App.Core.Database.Requests import user_rq
-from App.Bot.Keyboards.keyboards import inline_builder
+from App.Bot.Keyboards.ikb_keyboards import inline_builder
 
 
 uz_user_router = Router()
 
 
 # ----------------------------------------------"O'zbek tili" KNOPKASI---------------------------------------------
-@uz_user_router.callback_query(F.data.in_({'uz', 'uz_back_to_main_from_bonuses', 'uz_back_to_main_from_card', 'uz_back_to_main_from_operations', 'uz_back_to_main_from_about_us'}))
+@uz_user_router.callback_query(F.data.in_({'uz', 'uz_back_to_main_from_bonuses', 'uz_back_to_main_from_card', 'uz_back_to_main_from_operations', 'uz_back_to_main_from_about_us', 'uz_back_to_main_from_giveaway'}))
 async def uz_user(callback: CallbackQuery) -> None:
     await user_rq.set_user_language(callback.from_user.id, 'uz')
 
     try:
         await callback.message.edit_text("Bosh sahifaga xush kelibsiz! Quyidagilardan birini tanlab o'zingizga kerakli bo'lgan ma'lumotlarni bilib olishingiz mumkin",
                                          reply_markup=inline_builder(
-                                             ['💸 Bonuslar', '💳 AVO platinum', '🏦 Biz haqimizda', '🔄 Operatsiyalar', 'Ortga qaytish ↩️'],
-                                             ['uz_bonuses', 'uz_card', 'uz_about_us', 'uz_operations', 'uz_back_to_lang'],
+                                             ['💸 Bonuslar', '💳 AVO platinum', '🏦 Biz haqimizda', '🔄 Operatsiyalar', "🌟 «AVO ayfon marafon» yutuqli o'yini 🌟"],
+                                             ['uz_bonuses', 'uz_card', 'uz_about_us', 'uz_operations', 'uz_giveaway'],
                                              [2, 2, 1]
                                          )
         )
@@ -28,8 +28,8 @@ async def uz_user(callback: CallbackQuery) -> None:
         await callback.message.delete()
         await callback.message.answer("Bosh sahifaga xush kelibsiz! Quyidagilardan birini tanlab o'zingizga kerakli bo'lgan ma'lumotlarni bilib olishingiz mumkin",
                                       reply_markup=inline_builder(
-                                          ['💸 Bonuslar', '💳 AVO platinum', '🏦 Biz haqimizda', '🔄 Operatsiyalar', 'Ortga qaytish ↩️'],
-                                          ['uz_bonuses', 'uz_card', 'uz_about_us', 'uz_operations', 'uz_back_to_lang'],
+                                          ['💸 Bonuslar', '💳 AVO platinum', '🏦 Biz haqimizda', '🔄 Operatsiyalar', "🌟 «AVO ayfon marafon» yutuqli o'yini 🌟"],
+                                          ['uz_bonuses', 'uz_card', 'uz_about_us', 'uz_operations', 'uz_giveaway'],
                                           [2, 2, 1]
                                       )
         )
@@ -350,5 +350,19 @@ async def uz_dividends(callback: CallbackQuery) -> None:
                                          ['uz_back_to_documents_from_dividends']
                                      ),
                                      disable_web_page_preview=True
+    )
+    await callback.answer()
+
+
+# ---------------------------------------------"«AVO ayfon marafon» yutuqli o'yini" KNOPKASI---------------------------------------------
+@uz_user_router.callback_query(F.data == 'uz_giveaway')
+async def ru_giveaway(callback: CallbackQuery) -> None:
+    await callback.message.delete()    
+    await callback.message.answer_photo(photo=img.about_giveaway_uz_photo,
+                                        caption="<b>🌟 «AVO ayfon marafon» yutuqli o‘yini 🌟</b>\n\nNoyabr oyi zerikarli bo‘lmasligi aniq — chunki biz «AVO ayfon marafon» yutuqli o‘yinini boshlaymiz!\n\nOdatiy xaridlarni amalga oshiring va iPhone 17 Pro Max, HUMOFEST'ga chiptalar va AVO brendidan to'plamni yutib olish imkoniga ega bo‘ling.\n\nQahva, obuna uchun to'lov yoki boshqa xaridlar yangi iPhone yutish uchun qadam bo‘lishi mumkin",
+                                        reply_markup=inline_builder(
+                                            ['Ortga qaytish ↩️'],
+                                            ['uz_back_to_main_from_giveaway']
+                                        )
     )
     await callback.answer()
