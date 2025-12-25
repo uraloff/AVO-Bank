@@ -5,7 +5,7 @@ from App.Core.Database.Models.user import User
 
 
 # ------------------------------ Обновление времени последней активности пользователя ------------------------------
-class UpdateUserLastActivity:
+class UpdateLastActivity:
     def __init__(self, session_pool):
         self.session_pool = session_pool
 

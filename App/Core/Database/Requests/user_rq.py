@@ -36,6 +36,38 @@ async def set_user(telegram_id: int, full_name: str, username: str | None = None
             await session.refresh(user)
 
 
+async def get_user(telegram_id: int) -> User | None:
+    """
+    Получает пользователя по его Telegram ID.
+
+    :param telegram_id: ID пользователя в Telegram
+    :return: Объект пользователя или None, если пользователь не найден
+    """
+    async with async_session() as session:
+        result = await session.execute(
+            select(User).where(User.telegram_id == telegram_id)
+        )
+        user = result.scalar_one_or_none()
+        return user
+
+
+async def update_user(telegram_id: int, **kwargs) -> None:
+    """
+    Обновляет информацию о пользователе по его Telegram ID.
+
+    :param telegram_id: ID пользователя в Telegram
+    :param kwargs: Ключевые слова для обновления полей пользователя
+    :return: None
+    """
+    async with async_session() as session:
+        await session.execute(
+            update(User)
+            .where(User.telegram_id == telegram_id)
+            .values(**kwargs)
+        )
+        await session.commit()
+
+
 async def set_user_language(telegram_id: int, language: str) -> None:
     """
     Устанавливает язык пользователя по его Telegram ID.
@@ -66,3 +98,20 @@ async def get_user_language(telegram_id: int) -> str | None:
         )
         user_language = result.scalar_one_or_none()
         return user_language
+    
+
+async def set_user_phone_number(telegram_id: int, phone_number: str) -> None:
+    """
+    Устанавливает номер телефона пользователя по его Telegram ID.
+    
+    :param telegram_id: ID пользователя в Telegram
+    :param phone_number: Номер телефона пользователя
+    :return: None
+    """
+    async with async_session() as session:
+        await session.execute(
+            update(User)
+            .where(User.telegram_id == telegram_id)
+            .values(phone_number=phone_number)
+        )
+        await session.commit()

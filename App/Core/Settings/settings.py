@@ -4,3 +4,4 @@ from dotenv import load_dotenv
 load_dotenv()
 
 DB_URL: str = getenv('DB_URL')
+AI_KEY: str = getenv('AI_TOKEN')
