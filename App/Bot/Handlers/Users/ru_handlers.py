@@ -43,8 +43,8 @@ async def ru_sending_phone_number(message: Message, state: SendingPhoneNumber) -
     sent_message = await message.answer(
         "Номер телефона успешно сохранен ✅",
         reply_markup=inline_builder(
-            ['Главное меню 🏠'],
-            ['ru_back_to_main_from_phone_number']
+            ["Главное меню 🏠"],
+            ['ru_main_menu']
         )
     )
     await state.clear()
@@ -52,12 +52,12 @@ async def ru_sending_phone_number(message: Message, state: SendingPhoneNumber) -
 
 
 # ------------------------------ Главное меню ------------------------------
-@ru_user_router.callback_query(F.data.in_({'ru_after_change_lang', 'ru_back_to_main_from_bonuses', 'ru_back_to_main_from_card', 'ru_back_to_main_from_operations', 'ru_back_to_main_from_about_us', 'ru_back_to_main_from_giveaway', 'ru_back_to_main_from_phone_number'}))
+@ru_user_router.callback_query(F.data.in_({'ru_after_change_lang', 'ru_back_to_main_from_bonuses', 'ru_back_to_main_from_card', 'ru_back_to_main_from_operations', 'ru_back_to_main_from_about_us', 'ru_back_to_main_from_giveaway', 'ru_main_menu'}))
 async def ru_main_menu(callback: CallbackQuery, state: FSMContext) -> None:
     await callback.answer()
     await state.clear()
 
-    if callback.data == 'ru_back_to_main_from_phone_number':
+    if callback.data == 'ru_main_menu':
         await callback.message.delete()
         await callback.message.answer("🏠 Главное меню", reply_markup=kb.main_kb)
 

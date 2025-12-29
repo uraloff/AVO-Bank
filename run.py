@@ -7,9 +7,10 @@ from aiogram.enums import ParseMode
 from aiogram import Bot, Dispatcher
 from aiogram.client.default import DefaultBotProperties
 
-from App.Bot.Handlers.handlers import user_router
-from App.Bot.Handlers.uz_handlers import uz_user_router
-from App.Bot.Handlers.ru_handlers import ru_user_router
+from App.Bot.Handlers.Admins.admin import admin_router
+from App.Bot.Handlers.Users.handlers import user_router
+from App.Bot.Handlers.Users.uz_handlers import uz_user_router
+from App.Bot.Handlers.Users.ru_handlers import ru_user_router
 from App.Core.Database.Requests.session import async_session
 from App.Bot.Middlewares.last_activity import LastActivityMiddleware
 from App.Core.Database.Requests.middleware_rq import UpdateLastActivity
@@ -34,7 +35,7 @@ async def main():
     dp = Dispatcher()
     dp.message.outer_middleware(AutoClearInlineKeyboardMiddleware())
     dp.update.outer_middleware(LastActivityMiddleware(last_activity=UpdateLastActivity(session_pool=async_session)))
-    dp.include_routers(user_router, uz_user_router, ru_user_router)
+    dp.include_routers(user_router, uz_user_router, ru_user_router, admin_router)
 
     logging.info("Бот успешно запущен ✅")
 

@@ -13,4 +13,4 @@ class Admin(Base):
     id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
     telegram_id: Mapped[int] = mapped_column(BigInteger, ForeignKey('users.telegram_id', ondelete='CASCADE'), unique=True, nullable=False)
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=False), default=lambda: datetime.now().replace(microsecond=0))
-    user: Mapped["User"] = relationship(lazy="joined") 
+    user: Mapped["User"] = relationship(lazy="joined")
