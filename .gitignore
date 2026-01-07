@@ -1,3 +1,4 @@
 .env
 __pycache__/
 .venv/
+App/Rag/chroma_db/
